@@ -42,7 +42,7 @@ class Logger(logging.Logger):
         if not name:
             name = self.filename
 
-        log_filename = self.time.strftime("%Y-%m-%d-%H:%M:%S") + "-" + str(self.pid) + ".log"
+        log_filename = self.time.strftime("%Y-%m-%d-%H-%M-%S") + "-" + str(self.pid) + ".log"
         log_directory = self.directory + "/logs/"
         if not os.path.exists(log_directory):
             os.makedirs(log_directory)
