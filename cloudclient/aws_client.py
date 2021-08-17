@@ -26,16 +26,25 @@ class CloudAws(object):
         self.config = config
         logger.info('Connecting to AWS...')
         try:
-            self.client = boto3.client(
+
+            session = boto3.Session(
+                profile_name=self.config.get("profile-name"),
+                region_name=config["region"]
+            )
+            self.client = session.client(
                 'ec2',
-                aws_access_key_id=config["aws_access_key_id"],
-                aws_secret_access_key=config["aws_secret_access_key"],
-                region_name=config["region"])
-            self.resource = boto3.resource(
+            )
+                #aws_access_key_id=config["aws_access_key_id"],
+                #aws_secret_access_key=config["aws_secret_access_key"],
+                # profile="default",
+                # region_name=config["region"])
+            self.resource = session.resource(
                 'ec2',
-                aws_access_key_id=config["aws_access_key_id"],
-                aws_secret_access_key=config["aws_secret_access_key"],
-                region_name=config["region"])
+            )
+                # aws_access_key_id=config["aws_access_key_id"],
+                # aws_secret_access_key=config["aws_secret_access_key"],
+                # profile="default",
+                # region_name=config["region"])
             self.id = os.getpid()
             logger.info('Connection Successful.')
         except Exception as e:
